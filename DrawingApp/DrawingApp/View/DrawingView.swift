@@ -34,7 +34,9 @@ struct DrawingView: View {
                 Canvas { (ctx, size) in
                     d_ctx.renderEvent(ctx, size: size)
                 }.gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local).onChanged({value in
-                    d_ctx.drawingEvent(value)
+                    if !isShowingGifOk && !isShowingGifError {
+                        d_ctx.drawingEvent(value)
+                    }
                 }))
                 
                 HStack {
@@ -53,6 +55,16 @@ struct DrawingView: View {
                 loadImage()
             }
             
+            if d_ctx.imageData.changed {
+                Image(systemName: "exclamationmark.octagon.fill")
+                    .foregroundColor(.yellow)
+                    .font(.system(size: 30))
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity, alignment: .topTrailing)
+                    .padding()
+                    .shadow(color: .white, radius: 4)
+                
+            }
+            
             GIFView(type: .name("tick"), isActive: $isShowingGifOk, durationToShow: 5.0)
                 .aspectRatio(1, contentMode: .fit)
                 .scaleEffect(0.6)
@@ -64,7 +76,7 @@ struct DrawingView: View {
                 .scaleEffect(0.6)
                 .allowsHitTesting(false)
                 .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-
+            
         }
     }
     
@@ -111,7 +123,7 @@ struct DrawingView: View {
             )
         }
     }
-        
+    
     @ViewBuilder
     func sizeButton() -> some View {
         Button {
@@ -223,7 +235,7 @@ struct DrawingView: View {
 extension UIColorWell {
     override open func didMoveToSuperview() {
         super.didMoveToSuperview()
-
+        
         if let uiButton = self.subviews.first?.subviews.last as? UIButton {
             UIColorWellHelper.helper.execute = {
                 uiButton.sendActions(for: .touchUpInside)

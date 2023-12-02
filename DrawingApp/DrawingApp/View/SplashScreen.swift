@@ -15,7 +15,6 @@ class SplashAnimatorObject: ObservableObject {
     var updateTimer: Timer?
     
     func start(iconSize: Int) {
-        print("Animator start")
         // clear list
         self.lines = []
         
@@ -94,7 +93,6 @@ class SplashAnimatorObject: ObservableObject {
             } else {
                 // konec generovani
                 end = true
-                print(i)
             }
             
             // rotacni transformace (transformace musi byt aplikovana vzdy na aktualni bod x, y(i) ktery je vsak pocitan z predchozich netranformovanych pozic)
