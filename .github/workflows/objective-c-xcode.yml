@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: iOSDrawingApp  # Aktualizujte cestu k projektu
+          path: iOSDrawingApp/DrawingApp  # Aktualizujte cestu k projektu
 
       - name: Set Default Scheme
         run: |
